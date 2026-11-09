@@ -1,94 +1,143 @@
 {
   "categories": [
     {
-      "id": "math",
-      "name": "Math",
-      "emoji": "📐",
+      "id": "programming",
+      "name": "Programming & Computer Science",
+      "emoji": "💻",
       "links": [
-        {
-          "name": "Khan Academy",
-          "url": "https://www.khanacademy.org",
-          "description": "Free lessons from basic arithmetic to calculus, with practice exercises.",
-          "level": "All levels",
-          "tags": ["algebra", "calculus", "practice"]
-        },
-        {
-          "name": "3Blue1Brown",
-          "url": "https://www.3blue1brown.com",
-          "description": "Visual explanations of linear algebra, calculus and neural networks.",
-          "level": "Intermediate",
-          "tags": ["visual", "linear algebra", "calculus"]
-        },
-        {
-          "name": "Desmos",
-          "url": "https://www.desmos.com/calculator",
-          "description": "A free graphing calculator that's great for seeing functions come alive.",
-          "level": "All levels",
-          "tags": ["graphing", "tool"]
-        }
+        {"name": "freeCodeCamp", "url": "https://www.freecodecamp.org", "description": "Full-stack web development courses with certifications.", "level": "Beginner", "price": "Free", "tags": ["web", "certifications", "full-stack"]},
+        {"name": "The Odin Project", "url": "https://www.theodinproject.com", "description": "Open-source web development curriculum built around real projects.", "level": "Beginner", "price": "Free", "tags": ["web", "projects", "open source"]},
+        {"name": "Codecademy", "url": "https://www.codecademy.com", "description": "Interactive, browser-based coding lessons for beginners.", "level": "Beginner", "price": "Freemium", "tags": ["interactive", "beginner"]},
+        {"name": "edX / CS50", "url": "https://www.edx.org", "description": "Computer science foundations from top universities, including Harvard's CS50.", "level": "Beginner", "price": "Free", "tags": ["cs", "university", "cs50"]},
+        {"name": "LeetCode", "url": "https://leetcode.com", "description": "Data structures, algorithms and technical interview practice.", "level": "Intermediate", "price": "Freemium", "tags": ["algorithms", "data structures", "interviews"]},
+        {"name": "MIT OpenCourseWare", "url": "https://ocw.mit.edu", "description": "Real lecture notes, exams and videos from MIT courses.", "level": "Advanced", "price": "Free", "tags": ["cs", "lectures", "university"]},
+        {"name": "MDN Web Docs", "url": "https://developer.mozilla.org", "description": "The gold-standard free reference and tutorial platform maintained by Mozilla for web technologies.", "level": "All levels", "price": "Free", "tags": ["reference", "web", "tutorials"]},
+        {"name": "Exercism", "url": "https://exercism.org", "description": "100% free, open-source coding platform with code practice across 70+ languages and human mentor feedback.", "level": "All levels", "price": "Free", "tags": ["practice", "mentoring", "languages"]}
       ]
     },
     {
-      "id": "programming",
-      "name": "Programming",
-      "emoji": "💻",
+      "id": "math",
+      "name": "Mathematics",
+      "emoji": "📐",
       "links": [
-        {
-          "name": "freeCodeCamp",
-          "url": "https://www.freecodecamp.org",
-          "description": "Structured, free coding courses with certifications and projects.",
-          "level": "Beginner",
-          "tags": ["web", "python", "projects"]
-        },
-        {
-          "name": "MIT OpenCourseWare",
-          "url": "https://ocw.mit.edu",
-          "description": "Free course materials from MIT, including lectures, notes and problem sets.",
-          "level": "Advanced",
-          "tags": ["cs", "lectures", "university"]
-        }
+        {"name": "Khan Academy", "url": "https://www.khanacademy.org", "description": "Step-by-step curriculum from basic math to calculus.", "level": "All levels", "price": "Free", "tags": ["algebra", "calculus", "practice"]},
+        {"name": "Brilliant", "url": "https://brilliant.org", "description": "Interactive, visual math and problem-solving puzzles.", "level": "All levels", "price": "Freemium", "tags": ["puzzles", "visual", "problem solving"]},
+        {"name": "Paul's Online Math Notes", "url": "https://tutorial.math.lamar.edu", "description": "Free, comprehensive college-level lecture notes and fully worked exercise problems for Algebra and Calculus I–III.", "level": "Intermediate", "price": "Free", "tags": ["calculus", "differential equations", "worked problems"]},
+        {"name": "Desmos", "url": "https://www.desmos.com", "description": "Completely free advanced graphing and matrix computation tools to visualize functions, curves, and geometry.", "level": "All levels", "price": "Free", "tags": ["graphing", "matrices", "geometry"]},
+        {"name": "3Blue1Brown", "url": "https://www.3blue1brown.com", "description": "Visual explanations of linear algebra, calculus and neural networks.", "level": "Intermediate", "price": "Free", "tags": ["visual", "linear algebra", "calculus"]},
+        {"name": "GeoGebra", "url": "https://www.geogebra.org", "description": "Free dynamic math software to explore 3D geometry, algebra, statistics, and calculus visually.", "level": "All levels", "price": "Free", "tags": ["geometry", "statistics", "visual"]},
+        {"name": "Art of Problem Solving", "url": "https://artofproblemsolving.com", "description": "Advanced math and competition preparation.", "level": "Advanced", "price": "Freemium", "tags": ["competitions", "olympiad", "advanced"]}
       ]
     },
     {
       "id": "science",
-      "name": "Science",
+      "name": "Natural Sciences",
       "emoji": "🧪",
       "links": [
-        {
-          "name": "PhET Interactive Simulations",
-          "url": "https://phet.colorado.edu",
-          "description": "Free physics, chemistry and biology simulations you can play with.",
-          "level": "All levels",
-          "tags": ["physics", "chemistry", "simulations"]
-        },
-        {
-          "name": "OpenStax",
-          "url": "https://openstax.org",
-          "description": "Free, peer-reviewed textbooks for high school and college courses.",
-          "level": "Intermediate",
-          "tags": ["textbooks", "college"]
-        }
+        {"name": "PhET Interactive Simulations", "url": "https://phet.colorado.edu", "description": "Interactive physics, chemistry and biology simulations.", "level": "All levels", "price": "Free", "tags": ["physics", "chemistry", "biology", "simulations"]},
+        {"name": "LibreTexts", "url": "https://libretexts.org", "description": "Free, open-access textbooks across all science disciplines.", "level": "Intermediate", "price": "Free", "tags": ["textbooks", "open access", "stem"]},
+        {"name": "CK-12", "url": "https://www.ck12.org", "description": "Interactive textbooks and practice modules for foundational STEM.", "level": "Beginner", "price": "Free", "tags": ["practice", "textbooks", "stem"]},
+        {"name": "OpenStax", "url": "https://openstax.org", "description": "Free, peer-reviewed textbooks for high school and college courses. Rice University's open textbooks cover algebra, statistics and calculus too.", "level": "Intermediate", "price": "Free", "tags": ["textbooks", "college", "statistics"]},
+        {"name": "Coursera", "url": "https://www.coursera.org", "description": "University science courses and video lab modules.", "level": "Intermediate", "price": "Freemium", "tags": ["university", "courses", "labs"]},
+        {"name": "OpenLearn", "url": "https://www.open.edu/openlearn", "description": "Free academic science courses and modules published by The Open University.", "level": "Intermediate", "price": "Free", "tags": ["courses", "science", "open university"]}
+      ]
+    },
+    {
+      "id": "humanities",
+      "name": "History, Arts & Humanities",
+      "emoji": "🏛️",
+      "links": [
+        {"name": "Smarthistory", "url": "https://smarthistory.org", "description": "The public art history platform featuring thousands of essays and videos on art, architecture, and heritage.", "level": "All levels", "price": "Free", "tags": ["art history", "architecture", "heritage"]},
+        {"name": "World History Encyclopedia", "url": "https://www.worldhistory.org", "description": "Non-profit academic-reviewed history articles, maps, and historical timelines.", "level": "All levels", "price": "Free", "tags": ["history", "maps", "timelines"]},
+        {"name": "FutureLearn", "url": "https://www.futurelearn.com", "description": "Humanities and social science courses from global institutions.", "level": "Intermediate", "price": "Freemium", "tags": ["humanities", "social science", "courses"]},
+        {"name": "Internet History Sourcebooks Project", "url": "https://sourcebooks.fordham.edu", "description": "Fordham University's collection of primary historical sources and original ancient and medieval documents.", "level": "Advanced", "price": "Free", "tags": ["primary sources", "ancient", "medieval"]},
+        {"name": "Open Yale Courses", "url": "https://oyc.yale.edu", "description": "Full lecture video recordings and syllabi from actual introductory humanities classes taught at Yale.", "level": "Advanced", "price": "Free", "tags": ["lectures", "humanities", "yale"]},
+        {"name": "Stanford Encyclopedia of Philosophy", "url": "https://plato.stanford.edu", "description": "High-level, peer-reviewed open philosophy reference work maintained by Stanford University.", "level": "Advanced", "price": "Free", "tags": ["philosophy", "reference", "peer-reviewed"]}
+      ]
+    },
+    {
+      "id": "languages",
+      "name": "Language & General Skills",
+      "emoji": "🌍",
+      "links": [
+        {"name": "Duolingo", "url": "https://www.duolingo.com", "description": "Gamified bite-sized vocabulary and language practice available fully on a free plan.", "level": "Beginner", "price": "Freemium", "tags": ["languages", "vocabulary", "daily practice"]},
+        {"name": "Saylor Academy", "url": "https://www.saylor.org", "description": "Completely free self-paced university-level courses across business, computer science, and history.", "level": "Intermediate", "price": "Free", "tags": ["courses", "business", "self-paced"]},
+        {"name": "Wikipedia", "url": "https://www.wikipedia.org", "description": "The world's largest open encyclopedia for structured domain introductions and primary literature references.", "level": "All levels", "price": "Free", "tags": ["encyclopedia", "reference"]},
+        {"name": "Project Gutenberg", "url": "https://www.gutenberg.org", "description": "A library of over 70,000 free digital ebooks, literary classics, and historical texts.", "level": "All levels", "price": "Free", "tags": ["ebooks", "classics", "literature"]},
+        {"name": "BBC Learning English", "url": "https://www.bbc.co.uk/learningenglish", "description": "Free structured lessons, audio, and grammar modules for mastering the English language.", "level": "Beginner", "price": "Free", "tags": ["english", "grammar", "audio"]}
       ]
     },
     {
       "id": "study-skills",
-      "name": "Study Skills",
+      "name": "Study Skills & Memory",
       "emoji": "🧠",
       "links": [
-        {
-          "name": "Anki",
-          "url": "https://apps.ankiweb.net",
-          "description": "Free flashcards that use spaced repetition to help you remember things longer.",
-          "level": "All levels",
-          "tags": ["flashcards", "memory"]
-        },
-        {
-          "name": "Seeing Theory",
-          "url": "https://seeing-theory.brown.edu",
-          "description": "Interactive, visual introduction to probability and statistics.",
-          "level": "Beginner",
-          "tags": ["statistics", "probability", "visual"]
-        }
+        {"name": "Anki", "url": "https://apps.ankiweb.net", "description": "Free flashcards that use spaced repetition to help you remember longer.", "level": "All levels", "price": "Free", "tags": ["flashcards", "memory"]},
+        {"name": "Seeing Theory", "url": "https://seeing-theory.brown.edu", "description": "Interactive, visual introduction to probability and statistics.", "level": "Beginner", "price": "Free", "tags": ["statistics", "probability", "visual"]},
+        {"name": "Memory Toys", "url": "https://memory.toys", "description": "Memory tests and training games.", "level": "All levels", "price": "Free", "tags": ["memory", "games"]},
+        {"name": "Memory League", "url": "https://memoryleague.com", "description": "Memory training and competitions.", "level": "All levels", "price": "Freemium", "tags": ["memory", "training"]},
+        {"name": "Dual N-Back", "url": "https://nbacking.com", "description": "Dual n-back brain training.", "level": "All levels", "price": "Free", "tags": ["memory", "brain training"]},
+        {"name": "BrainScale", "url": "https://brainscale.net", "description": "Brain training tests.", "level": "All levels", "price": "Free", "tags": ["memory", "brain training"]},
+        {"name": "Art of Memory", "url": "https://artofmemory.com", "description": "Memory improvement book, games and forums.", "level": "All levels", "price": "Freemium", "tags": ["memory", "techniques", "forums"]}
+      ]
+    },
+    {
+      "id": "courses",
+      "name": "Courses & Lectures",
+      "emoji": "🎓",
+      "links": [
+        {"name": "Limnology", "url": "https://educational-channels.com", "description": "Curated list of educational YouTube channels.", "level": "All levels", "price": "Free", "tags": ["youtube", "channels", "education"]},
+        {"name": "Gresham College", "url": "https://www.gresham.ac.uk", "description": "Free public lectures, also available on YouTube.", "level": "Intermediate", "price": "Free", "tags": ["lectures", "public", "youtube"]},
+        {"name": "Class Central", "url": "https://www.classcentral.com", "description": "Search engine for free online courses.", "level": "All levels", "price": "Free", "tags": ["course search", "mooc"]},
+        {"name": "OpenCulture Free Online Courses", "url": "https://www.openculture.com/freeonlinecourses", "description": "Collection of free online courses and cultural resources.", "level": "All levels", "price": "Free", "tags": ["courses", "culture"]},
+        {"name": "Google Digital Garage", "url": "https://grow.google/intl/uk/courses-and-tools/", "description": "Free Google courses and tools.", "level": "Beginner", "price": "Free", "tags": ["google", "digital skills"]},
+        {"name": "OpenHPI", "url": "https://open.hpi.de", "description": "Free online courses from the Hasso Plattner Institute.", "level": "Intermediate", "price": "Free", "tags": ["courses", "computer science", "germany"]},
+        {"name": "OLI (Carnegie Mellon)", "url": "https://oli.cmu.edu/independent-learner-courses/", "description": "Carnegie Mellon's free self-paced courses.", "level": "Intermediate", "price": "Free", "tags": ["courses", "self-paced", "university"]},
+        {"name": "Video Lectures", "url": "https://videolectures.net", "description": "Lectures from academic conferences and courses.", "level": "Advanced", "price": "Free", "tags": ["lectures", "research", "conferences"]},
+        {"name": "Paul G. Allen School (UW CSE)", "url": "https://www.youtube.com/@uwcse", "description": "University of Washington computer science lectures on YouTube.", "level": "Intermediate", "price": "Free", "tags": ["cs", "lectures", "youtube"]},
+        {"name": "Crash Course", "url": "https://thecrashcourse.com", "description": "Short, fast-paced video courses on many topics.", "level": "Beginner", "price": "Free", "tags": ["video", "overview", "beginner"]},
+        {"name": "EbookFoundation Free Online Courses", "url": "https://github.com/EbookFoundation/free-programming-books#free-online-courses", "description": "Index of free online programming courses.", "level": "All levels", "price": "Free", "tags": ["programming", "index", "courses"]},
+        {"name": "Course CSE", "url": "https://cse.google.com/cse?cx=67ed14bf7b99643e3", "description": "Search across many course sites at once.", "level": "All levels", "price": "Free", "tags": ["course search", "multi-site"]}
+      ]
+    },
+    {
+      "id": "learning-sites",
+      "name": "Learning Sites & Tools",
+      "emoji": "🧭",
+      "links": [
+        {"name": "Learn Anything", "url": "https://learn-anything.xyz", "description": "Search tool for learning resources.", "level": "All levels", "price": "Free", "tags": ["search", "resources"]},
+        {"name": "OSSU", "url": "https://github.com/ossu", "description": "Open source self-study path for computer science.", "level": "Beginner", "price": "Free", "tags": ["cs", "self-study", "curriculum"]},
+        {"name": "The Borr Project", "url": "https://borr.dev", "description": "Learning resources for self-taught developers.", "level": "Beginner", "price": "Free", "tags": ["self-taught", "development"]},
+        {"name": "The Free Learning List", "url": "https://freelearninglist.org", "description": "Curated list of free learning resources.", "level": "All levels", "price": "Free", "tags": ["curated", "resources"]},
+        {"name": "Awesome Educational Games", "url": "https://github.com/yrgo/awesome-educational-games", "description": "Index of educational games.", "level": "All levels", "price": "Free", "tags": ["games", "index"]},
+        {"name": "Project Lumen", "url": "https://www.projectlumen.app", "description": "Interactive lessons.", "level": "All levels", "price": "Free", "tags": ["interactive", "lessons"]},
+        {"name": "Cognito", "url": "https://cognito.org", "description": "Interactive lessons and learning tools.", "level": "All levels", "price": "Free", "tags": ["interactive", "lessons"]},
+        {"name": "Academo", "url": "https://academo.org", "description": "Interactive lessons and learning games.", "level": "All levels", "price": "Free", "tags": ["interactive", "games"]},
+        {"name": "r/educationalgifs", "url": "https://reddit.com/r/educationalgifs", "description": "Learn concepts through short animated GIFs.", "level": "All levels", "price": "Free", "tags": ["gifs", "visual"]},
+        {"name": "r/explainlikeimfive", "url": "https://www.reddit.com/r/explainlikeimfive/", "description": "Complex topics explained in simple terms.", "level": "Beginner", "price": "Free", "tags": ["simple explanations", "community"]},
+        {"name": "The Punctuation Guide", "url": "https://www.thepunctuationguide.com", "description": "Clear guide to punctuation rules.", "level": "All levels", "price": "Free", "tags": ["writing", "grammar"]},
+        {"name": "Basic Knowledge 101", "url": "https://www.basicknowledge101.com", "description": "Knowledge base for topic-based learning.", "level": "Beginner", "price": "Free", "tags": ["knowledge base", "topics"]},
+        {"name": "media.ccc.de", "url": "https://media.ccc.de", "description": "Recordings of conference talks on science and technology.", "level": "Advanced", "price": "Free", "tags": ["talks", "science", "technology"]},
+        {"name": "Stack Exchange", "url": "https://stackexchange.com", "description": "Q&A communities across many subjects.", "level": "All levels", "price": "Free", "tags": ["q&a", "community"]},
+        {"name": "Explorabl.es", "url": "https://explorabl.es", "description": "Interactive explainers and visual guides.", "level": "All levels", "price": "Free", "tags": ["interactive", "visual"]},
+        {"name": "MinuteLabs", "url": "https://minutelabs.io", "description": "Quizzes, guides and games.", "level": "All levels", "price": "Free", "tags": ["quizzes", "games"]},
+        {"name": "Wikiversity", "url": "https://www.wikiversity.org", "description": "Free learning resources and courses from the Wikimedia community.", "level": "All levels", "price": "Free", "tags": ["wikimedia", "courses"]},
+        {"name": "AFAIK", "url": "https://afaik.io", "description": "Map of learning topics.", "level": "All levels", "price": "Free", "tags": ["learning map", "topics"]},
+        {"name": "AnimaGraffs", "url": "https://animagraffs.com", "description": "Animated infographics.", "level": "All levels", "price": "Free", "tags": ["infographics", "animation"]},
+        {"name": "Information Is Beautiful", "url": "https://informationisbeautiful.net", "description": "Data visualizations and infographics.", "level": "All levels", "price": "Free", "tags": ["data", "visualization", "infographics"]},
+        {"name": "The Pudding", "url": "https://pudding.cool", "description": "Visual essays exploring data.", "level": "Intermediate", "price": "Free", "tags": ["data", "visual essays"]},
+        {"name": "sheets.works", "url": "https://sheets.works/data-viz/", "description": "Data visualization examples.", "level": "All levels", "price": "Free", "tags": ["data", "visualization"]},
+        {"name": "HalcyonMaps", "url": "https://www.halcyonmaps.com/infographics", "description": "Infographics and maps.", "level": "All levels", "price": "Free", "tags": ["infographics", "maps"]},
+        {"name": "r/coolguides", "url": "https://www.reddit.com/r/coolguides/", "description": "Community guides and tutorials.", "level": "All levels", "price": "Free", "tags": ["guides", "community"]},
+        {"name": "coolguid.es", "url": "https://coolguid.es", "description": "Guides and tutorials.", "level": "All levels", "price": "Free", "tags": ["guides", "tutorials"]},
+        {"name": "Astral Codex Ten", "url": "https://www.astralcodexten.com", "description": "Essays on science, psychology and philosophy.", "level": "Advanced", "price": "Free", "tags": ["essays", "science", "philosophy"]},
+        {"name": "Read Scott Alexander", "url": "https://readscottalexander.com", "description": "Archive of essays on science, psychology and philosophy.", "level": "Advanced", "price": "Free", "tags": ["essays", "archive"]},
+        {"name": "Common Misconceptions", "url": "https://en.wikipedia.org/wiki/List_of_common_misconceptions", "description": "Index of common misconceptions.", "level": "All levels", "price": "Free", "tags": ["misconceptions", "index"]},
+        {"name": "LitCharts", "url": "https://www.litcharts.com", "description": "Literature study guides.", "level": "Intermediate", "price": "Freemium", "tags": ["literature", "study guides"]},
+        {"name": "Appropedia", "url": "https://www.appropedia.org", "description": "Wiki about sustainability.", "level": "All levels", "price": "Free", "tags": ["sustainability", "wiki"]},
+        {"name": "British & Exotic Mineralogy", "url": "https://www.c82.net/mineralogy/", "description": "Mineralogy database.", "level": "Intermediate", "price": "Free", "tags": ["mineralogy", "database"]},
+        {"name": "ShipSpotting", "url": "https://www.shipspotting.com", "description": "Ship index and photos.", "level": "All levels", "price": "Free", "tags": ["ships", "photos", "index"]},
+        {"name": "P2PU", "url": "https://www.p2pu.org", "description": "Join learning groups using free courses.", "level": "All levels", "price": "Free", "tags": ["learning groups", "courses"]}
       ]
     }
   ]
