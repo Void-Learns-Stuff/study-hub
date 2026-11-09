@@ -64,15 +64,52 @@ function matches(link, query) {
   return query.split(/\s+/).every(word => haystack.includes(word));
 }
 
+// Builds one resource card, used by both Top picks and the subject sections
+function makeCard(link, i) {
+  const card = document.createElement("article");
+  card.className = "card" + (link.featured ? " featured" : "");
+  card.style.animationDelay = `${i * 60}ms`;
+  card.innerHTML = `
+    <h3>${link.featured ? '<span class="star" title="Top pick" aria-label="Top pick">★</span>' : ""}<a href="${link.url}" target="_blank" rel="noopener">${link.name}</a></h3>
+    <p>${link.description}</p>
+    <div class="meta">
+      ${link.price ? `<span class="pill price price-${link.price.toLowerCase()}">${link.price}</span>` : ""}
+      ${link.level ? `<span class="pill level">${link.level}</span>` : ""}
+      ${(link.tags || []).map(t => `<span class="pill tag">${t}</span>`).join("")}
+    </div>
+  `;
+  return card;
+}
+
+// Shows starred sites at the top of the page
+function renderTopPicks(q) {
+  const box = document.getElementById("top-picks");
+  const grid = document.getElementById("top-cards");
+  grid.innerHTML = "";
+
+  // Only show Top picks when no single subject is selected
+  const cats = state.activeFilter === "all" ? state.categories : [];
+  const picks = cats.flatMap(cat => cat.links.filter(link => link.featured && matches(link, q)));
+
+  box.hidden = picks.length === 0;
+  picks.forEach((link, i) => grid.appendChild(makeCard(link, i)));
+}
+
 function render() {
   const q = state.query.trim().toLowerCase();
   els.results.innerHTML = "";
   let total = 0;
 
+  renderTopPicks(q);
+
   state.categories
     .filter(cat => state.activeFilter === "all" || cat.id === state.activeFilter)
     .forEach(cat => {
-      const shown = cat.links.filter(link => matches(link, q));
+      // Filter by search, then put featured sites first
+      const shown = cat.links
+        .filter(link => matches(link, q))
+        .sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+
       if (shown.length === 0) return;
       total += shown.length;
 
@@ -87,20 +124,7 @@ function render() {
       `;
 
       const grid = section.querySelector(".cards");
-      shown.forEach((link, i) => {
-        const card = document.createElement("article");
-        card.className = "card";
-        card.style.animationDelay = `${i * 60}ms`;
-        card.innerHTML = `
-          <h3><a href="${link.url}" target="_blank" rel="noopener">${link.name}</a></h3>
-          <p>${link.description}</p>
-          <div class="meta">
-            ${link.level ? `<span class="pill level">${link.level}</span>` : ""}
-            ${(link.tags || []).map(t => `<span class="pill tag">${t}</span>`).join("")}
-          </div>
-        `;
-        grid.appendChild(card);
-      });
+      shown.forEach((link, i) => grid.appendChild(makeCard(link, i)));
 
       els.results.appendChild(section);
     });
