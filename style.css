@@ -259,3 +259,133 @@ main {
 @media (max-width: 600px) {
   .cards { grid-template-columns: 1fr; }
 }
+
+/* ---------- Pull-cord button ---------- */
+.pull-cord {
+  position: fixed;
+  top: 0;
+  right: 28px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transform-origin: top center;
+}
+
+.pull-cord .cord {
+  display: block;
+  width: 2px;
+  height: 46px;
+  background: var(--ink);
+  transition: height .25s var(--ease);
+}
+
+.pull-cord .knob {
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin-top: -1px;
+  border-radius: 50%;
+  background: var(--coral);
+  border: 2px solid var(--ink);
+  transition: transform .25s var(--ease);
+}
+
+.pull-cord:hover .cord,
+.pull-cord:focus-visible .cord {
+  height: 54px;
+}
+
+.pull-cord:hover .knob,
+.pull-cord:focus-visible .knob {
+  transform: translateY(3px);
+}
+
+.pull-cord:focus-visible {
+  outline: 2px dashed var(--indigo);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* Tooltip: shows the text from data-tip on hover */
+.pull-cord::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: 70px;
+  right: 0;
+  white-space: nowrap;
+  padding: .35rem .75rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: .8rem;
+  font-weight: 800;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity .2s, transform .2s var(--ease);
+  pointer-events: none;
+}
+
+.pull-cord:hover::after,
+.pull-cord:focus-visible::after {
+  opacity: 1;
+  transform: none;
+}
+
+/* The tug animation, played when clicked */
+.pull-cord.is-pulling {
+  animation: tug .45s var(--ease);
+}
+
+@keyframes tug {
+  0%   { transform: translateY(0); }
+  35%  { transform: translateY(14px); }
+  70%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+/* ---------- Dark theme ---------- */
+body {
+  transition: background-color .4s, color .4s;
+}
+
+body.dark {
+  --ink: #f3ecdf;
+  --paper: #14121c;
+  --card: #1f1c2b;
+  --line: #35314a;
+  --muted: #b8b3c9;
+}
+
+body.dark .hero {
+  background: #2a2540;
+}
+
+body.dark .suggest {
+  background: #2e2b6b;
+}
+
+body.dark .card,
+body.dark #search {
+  box-shadow: 5px 5px 0 #000;
+}
+
+body.dark .card:hover {
+  box-shadow: 8px 8px 0 #000;
+}
+
+body.dark .squiggle::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0 5 Q 12.5 0 25 5 T 50 5 T 75 5 T 100 5' stroke='%23f3ecdf' stroke-width='3' fill='none'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pull-cord .cord,
+  .pull-cord .knob,
+  .pull-cord::after {
+    transition: none !important;
+  }
+}
