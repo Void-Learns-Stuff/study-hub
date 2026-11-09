@@ -187,6 +187,7 @@ function render() {
 
 // ---------- Thanos snap (scroll-linked) ----------
 const BAND = 140;
+const SHARDS = 10;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const clamp01 = v => Math.min(1, Math.max(0, v));
 let snapQueued = false;
@@ -210,34 +211,72 @@ function updateSnap() {
   });
 }
 
+// Copies the card's real content into horizontal slices
+function buildShards(card) {
+  const wrap = document.createElement("div");
+  wrap.className = "shards";
+  const content = Array.from(card.children).filter(c => !c.classList.contains("dust"));
+
+  for (let i = 0; i < SHARDS; i++) {
+    const shard = document.createElement("div");
+    shard.className = "shard";
+    const top = (i / SHARDS) * 100;
+    const bottom = 100 - ((i + 1) / SHARDS) * 100;
+    shard.style.clipPath = `inset(${top}% 0 ${bottom}% 0)`;
+    if (i === 0) shard.style.borderTop = "2px solid var(--ink)";
+    if (i === SHARDS - 1) shard.style.borderBottom = "2px solid var(--ink)";
+
+    // Each slice gets its own random drift and tilt
+    shard._dx = rand(-36, 36);
+    shard._dy = rand(-70, -20);
+    shard._rot = rand(-10, 10);
+
+    content.forEach(c => shard.appendChild(c.cloneNode(true)));
+    wrap.appendChild(shard);
+  }
+
+  card.appendChild(wrap);
+  card._shards = Array.from(wrap.children);
+  card.classList.add("shattering");
+}
+
+function removeShards(card) {
+  if (card._shards) {
+    card.querySelector(".shards")?.remove();
+    card._shards = null;
+  }
+  card.classList.remove("shattering");
+}
+
 function applySnap(card, p, dir) {
   if (p <= 0.001) {
     if (card._snapped) {
-      card.style.opacity = "";
-      card.style.filter = "";
-      card.style.translate = "";
-      card.style.scale = "";
-      card.style.transition = "";
+      removeShards(card);
       card._dust.forEach(d => (d.style.opacity = "0"));
       card._snapped = false;
     }
     return;
   }
 
+  if (!card._shards) buildShards(card);
   card._snapped = true;
-  card.style.transition = "none";
-  card.style.opacity = String(1 - p);
-  card.style.filter = `blur(${(p * 6).toFixed(2)}px)`;
-  card.style.translate = `0 ${(-p * 24 * dir).toFixed(1)}px`;
-  card.style.scale = (1 - p * 0.05).toFixed(3);
 
+  // The slices break off starting from the side the card is leaving through
+  card._shards.forEach((s, i) => {
+    const order = dir < 0 ? i / SHARDS : 1 - i / SHARDS;
+    const l = clamp01(p * 1.5 - order * 0.5);
+    s.style.transform = `translate(${(s._dx * l).toFixed(1)}px, ${(s._dy * l).toFixed(1)}px) rotate(${(s._rot * l).toFixed(2)}deg)`;
+    s.style.opacity = String(1 - Math.pow(l, 1.4));
+    s.style.filter = `blur(${(l * 2.5).toFixed(2)}px)`;
+  });
+
+  // Loose dust drifts off the card
   const glow = Math.sin(Math.min(1, p) * Math.PI);
   card._dust.forEach(d => {
     d.style.opacity = glow.toFixed(3);
     d.style.transform = `translate(${(d.dx * p).toFixed(1)}px, ${(d.dy * p).toFixed(1)}px)`;
   });
 }
-
 window.addEventListener("scroll", requestSnap, { passive: true });
 window.addEventListener("resize", requestSnap);
 
