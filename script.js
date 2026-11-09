@@ -82,21 +82,24 @@ function makeCard(link, i) {
     </div>
   `;
 
-  // Dust particles used by the Thanos effect
+  // Dust grains used by the Thanos effect
   const dustLayer = document.createElement("div");
   dustLayer.className = "dust";
   card._dust = [];
-  for (let k = 0; k < 22; k++) {
+  for (let k = 0; k < 120; k++) {
     const dot = document.createElement("span");
     dot.className = "dust-dot";
-    const size = rand(2, 5);
+    const size = rand(1, 3);
     dot.style.left = `${rand(0, 100)}%`;
     dot.style.top = `${rand(0, 100)}%`;
     dot.style.width = `${size}px`;
     dot.style.height = `${size}px`;
     dot.style.background = DUST_COLORS[k % DUST_COLORS.length];
-    dot.dx = rand(-60, 60);
-    dot.dy = rand(-140, -40);
+    dot.dx = rand(-90, 90);
+    dot.dy = rand(-160, -30);
+    dot.delay = rand(0, 0.4);
+    dot.phase = rand(0, Math.PI * 2);
+    dot.maxOpacity = rand(0.5, 1);
     dustLayer.appendChild(dot);
     card._dust.push(dot);
   }
