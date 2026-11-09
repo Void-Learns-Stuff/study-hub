@@ -114,9 +114,10 @@ function render() {
       total += shown.length;
 
       const section = document.createElement("section");
+      section.className = `subject subject-${cat.id}`;
       section.innerHTML = `
         <h2 class="category-head">
-          <span aria-hidden="true">${cat.emoji || ""}</span>
+          <span class="subject-icon" aria-hidden="true">${cat.emoji || ""}</span>
           ${cat.name}
           <span class="count">${shown.length}</span>
         </h2>
@@ -148,8 +149,6 @@ els.clear.addEventListener("click", () => {
   render();
   els.search.focus();
 });
-
-init();
 
 // ---------- Dark mode pull-cord ----------
 const darkToggle = document.getElementById("darkToggle");
@@ -191,3 +190,5 @@ darkToggle.addEventListener("click", () => {
 darkToggle.addEventListener("animationend", () => {
   darkToggle.classList.remove("is-pulling");
 });
+
+init();
