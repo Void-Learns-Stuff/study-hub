@@ -243,8 +243,8 @@ function applySnap(card, p, dir) {
     d.style.transform = `translate(${(d.dx * local + sway).toFixed(1)}px, ${(d.dy * local).toFixed(1)}px)`;
   });
 }
-window.addEventListener("scroll", requestSnap, { passive: true });
-window.addEventListener("resize", requestSnap);
+window.addEventListener("scroll", () => { requestSnap(); requestDepth(); }, { passive: true });
+window.addEventListener("resize", () => { requestSnap(); requestDepth(); });
 
 // ---------- Search input ----------
 let timer;
