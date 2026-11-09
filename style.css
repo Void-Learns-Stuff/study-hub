@@ -389,3 +389,18 @@ body.dark .squiggle::after {
     transition: none !important;
   }
 }
+/* ---------- Top picks section ---------- */
+.top-picks {
+  margin-bottom: 2.75rem;
+  padding: 1.5rem;
+  border: 2px dashed #f2a900;
+  border-radius: var(--radius);
+}
+
+.top-picks[hidden] {
+  display: none;
+}
+
+.top-picks .category-head {
+  color: var(--ink);
+}
