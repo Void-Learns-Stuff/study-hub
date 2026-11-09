@@ -146,6 +146,7 @@ main {
   gap: 1.1rem;
 }
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--card);
@@ -154,7 +155,7 @@ main {
   padding: 1.25rem 1.3rem;
   box-shadow: 5px 5px 0 var(--ink);
   transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s;
-  animation: rise .45s var(--ease) both;
+  animation: rise .45s var(--ease) backwards;
 }
 .card:nth-child(3n) { transform: rotate(.6deg); }
 .card:hover {
@@ -472,4 +473,15 @@ body.dark .squiggle::after {
 @media (max-width: 600px) {
   .cards { grid-template-columns: 1fr; }
   .hero h1 { font-size: 2.6rem; }
+}
+/* ---------- Thanos dust ---------- */
+.dust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.dust-dot {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
 }
