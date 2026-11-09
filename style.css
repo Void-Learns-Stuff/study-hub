@@ -157,9 +157,8 @@ main {
   transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s;
   animation: rise .45s var(--ease) backwards;
 }
-.card:nth-child(3n) { transform: rotate(.6deg); }
+.card:nth-child(3n) { rotate: .6deg; }
 .card:hover {
-  transform: translate(-3px, -3px) rotate(0);
   box-shadow: 8px 8px 0 var(--ink);
 }
 .card.featured {
@@ -433,13 +432,12 @@ body.dark .squiggle::after {
   box-shadow: 8px 8px 0 var(--teal);
 }
 .subject-math .card:hover {
-  transform: translate(-3px, -3px) rotate(-1.5deg);
+  box-shadow: 8px 8px 0 var(--indigo);
 }
 .subject-science .card:hover {
   box-shadow: 0 0 0 6px #b8f5e0, 8px 8px 0 var(--ink);
 }
 .subject-humanities .card:hover {
-  transform: translate(-2px, -2px) rotate(0.5deg);
   box-shadow: 8px 8px 0 #f2a900;
 }
 .subject-languages .card:hover h3 {
@@ -449,14 +447,12 @@ body.dark .squiggle::after {
   color: var(--coral);
 }
 .subject-study-skills .card:hover {
-  transform: perspective(700px) rotateY(-8deg) translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--teal);
 }
 .subject-courses .card:hover {
-  transform: translateY(-6px);
   box-shadow: 8px 14px 0 var(--coral);
 }
 .subject-learning-sites .card:hover {
-  transform: scale(1.03);
   box-shadow: 8px 8px 0 var(--indigo);
 }
 
@@ -484,4 +480,18 @@ body.dark .squiggle::after {
   position: absolute;
   border-radius: 50%;
   opacity: 0;
+}
+/* ---------- Steam-style glare ---------- */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, .35), transparent 55%);
+  opacity: 0;
+  transition: opacity .25s;
+}
+.card:hover::after {
+  opacity: 1;
 }
