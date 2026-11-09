@@ -65,16 +65,5 @@ function matches(link, query) {
 }
 
 // ---------- Cards ----------
-const DUST_COLORS = ["#ef476f", "#ffd166", "#06a77d", "#4a3cc7", "#8f8aa8"];
-const rand = (min, max) => min + Math.random() * (max - min);
-
-function makeCard(link, i) {
-  const card = document.createElement("article");
-  card.className = "card" + (link.featured ? " featured" : "");
-  card.style.animationDelay = `${i * 60}ms`;
-  card.innerHTML = `
-    <h3>${link.featured ? '<span class="star" title="Top pick" aria-label="Top pick">★</span>' : ""}<a href="${link.url}" target="_blank" rel="noopener">${link.name}</a></h3>
-    <p>${link.description}</p>
-    <div class="meta">
-      ${link.price ? `<span class="pill price price-${link.price.toLowerCase()}">${link.price}</span>` : ""}
-      ${link.level ? `<span class="pill level">${link.level}</span>` : ""}
+const
+  
