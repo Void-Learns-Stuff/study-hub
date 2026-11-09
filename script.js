@@ -65,4 +65,203 @@ function matches(link, query) {
 }
 
 // ---------- Cards ----------
-const
+const DUST_COLORS = ["#ef476f", "#ffd166", "#06a77d", "#4a3cc7", "#8f8aa8"];
+const rand = (min, max) => min + Math.random() * (max - min);
+
+function makeCard(link, i) {
+  const card = document.createElement("article");
+  card.className = "card" + (link.featured ? " featured" : "");
+  card.style.animationDelay = `${i * 60}ms`;
+  card.innerHTML = `
+    <h3>${link.featured ? '<span class="star" title="Top pick" aria-label="Top pick">★</span>' : ""}<a href="${link.url}" target="_blank" rel="noopener">${link.name}</a></h3>
+    <p>${link.description}</p>
+    <div class="meta">
+      ${link.price ? `<span class="pill price price-${link.price.toLowerCase()}">${link.price}</span>` : ""}
+      ${link.level ? `<span class="pill level">${link.level}</span>` : ""}
+      ${(link.tags || []).map(t => `<span class="pill tag">${t}</span>`).join("")}
+    </div>
+  `;
+
+  // Dust particles used by the Thanos effect
+  const dustLayer = document.createElement("div");
+  dustLayer.className = "dust";
+  card._dust = [];
+  for (let k = 0; k < 22; k++) {
+    const dot = document.createElement("span");
+    dot.className = "dust-dot";
+    const size = rand(2, 5);
+    dot.style.left = `${rand(0, 100)}%`;
+    dot.style.top = `${rand(0, 100)}%`;
+    dot.style.width = `${size}px`;
+    dot.style.height = `${size}px`;
+    dot.style.background = DUST_COLORS[k % DUST_COLORS.length];
+    dot.dx = rand(-60, 60);
+    dot.dy = rand(-140, -40);
+    dustLayer.appendChild(dot);
+    card._dust.push(dot);
+  }
+  card.appendChild(dustLayer);
+
+  return card;
+}
+
+function renderTopPicks(q) {
+  const box = document.getElementById("top-picks");
+  const grid = document.getElementById("top-cards");
+  grid.innerHTML = "";
+
+  const cats = state.activeFilter === "all" ? state.categories : [];
+  const picks = cats.flatMap(cat => cat.links.filter(link => link.featured && matches(link, q)));
+
+  box.hidden = picks.length === 0;
+  picks.forEach((link, i) => grid.appendChild(makeCard(link, i)));
+}
+
+function render() {
+  const q = state.query.trim().toLowerCase();
+  els.results.innerHTML = "";
+  let total = 0;
+
+  renderTopPicks(q);
+
+  state.categories
+    .filter(cat => state.activeFilter === "all" || cat.id === state.activeFilter)
+    .forEach(cat => {
+      const shown = cat.links
+        .filter(link => matches(link, q))
+        .sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+
+      if (shown.length === 0) return;
+      total += shown.length;
+
+      const section = document.createElement("section");
+      section.className = `subject subject-${cat.id}`;
+      section.innerHTML = `
+        <h2 class="category-head">
+          <span class="subject-icon" aria-hidden="true">${cat.emoji || ""}</span>
+          ${cat.name}
+          <span class="count">${shown.length}</span>
+        </h2>
+        <div class="cards"></div>
+      `;
+
+      const grid = section.querySelector(".cards");
+      shown.forEach((link, i) => grid.appendChild(makeCard(link, i)));
+
+      els.results.appendChild(section);
+    });
+
+  els.empty.hidden = total > 0;
+  requestSnap();
+}
+
+// ---------- Thanos snap (scroll-linked) ----------
+const BAND = 140;
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const clamp01 = v => Math.min(1, Math.max(0, v));
+let snapQueued = false;
+
+function requestSnap() {
+  if (reduceMotion || snapQueued) return;
+  snapQueued = true;
+  requestAnimationFrame(updateSnap);
+}
+
+function updateSnap() {
+  snapQueued = false;
+  const vh = window.innerHeight;
+
+  document.querySelectorAll(".card").forEach(card => {
+    const r = card.getBoundingClientRect();
+    const pTop = clamp01((BAND - r.bottom) / BAND);
+    const pBot = clamp01((r.top - (vh - BAND)) / BAND);
+    const p = Math.max(pTop, pBot);
+    applySnap(card, p, pTop > pBot ? -1 : 1);
+  });
+}
+
+function applySnap(card, p, dir) {
+  if (p <= 0.001) {
+    if (card._snapped) {
+      card.style.opacity = "";
+      card.style.filter = "";
+      card.style.transform = "";
+      card.style.transition = "";
+      card._dust.forEach(d => (d.style.opacity = "0"));
+      card._snapped = false;
+    }
+    return;
+  }
+
+  card._snapped = true;
+  card.style.transition = "none";
+  card.style.opacity = String(1 - p);
+  card.style.filter = `blur(${(p * 6).toFixed(2)}px)`;
+  card.style.transform = `translateY(${(-p * 24 * dir).toFixed(1)}px) scale(${(1 - p * 0.05).toFixed(3)})`;
+
+  const glow = Math.sin(Math.min(1, p) * Math.PI);
+  card._dust.forEach(d => {
+    d.style.opacity = glow.toFixed(3);
+    d.style.transform = `translate(${(d.dx * p).toFixed(1)}px, ${(d.dy * p).toFixed(1)}px)`;
+  });
+}
+
+window.addEventListener("scroll", requestSnap, { passive: true });
+window.addEventListener("resize", requestSnap);
+
+// ---------- Search input ----------
+let timer;
+els.search.addEventListener("input", e => {
+  clearTimeout(timer);
+  timer = setTimeout(() => {
+    state.query = e.target.value;
+    render();
+  }, 150);
+});
+
+els.clear.addEventListener("click", () => {
+  els.search.value = "";
+  state.query = "";
+  render();
+  els.search.focus();
+});
+
+// ---------- Dark mode pull-cord ----------
+const darkToggle = document.getElementById("darkToggle");
+const THEME_KEY = "studyhub-dark";
+
+if (darkToggle) {
+  const applyTheme = isDark => {
+    document.body.classList.toggle("dark", isDark);
+    darkToggle.setAttribute("aria-pressed", String(isDark));
+    darkToggle.dataset.tip = isDark
+      ? "Click to turn off dark mode"
+      : "Click to turn on dark mode";
+  };
+
+  let savedDark = false;
+  try {
+    savedDark = localStorage.getItem(THEME_KEY) === "true";
+  } catch (e) {}
+  applyTheme(savedDark);
+
+  darkToggle.addEventListener("click", () => {
+    const next = !document.body.classList.contains("dark");
+
+    darkToggle.classList.remove("is-pulling");
+    void darkToggle.offsetWidth;
+    darkToggle.classList.add("is-pulling");
+
+    setTimeout(() => applyTheme(next), 180);
+
+    try {
+      localStorage.setItem(THEME_KEY, String(next));
+    } catch (e) {}
+  });
+
+  darkToggle.addEventListener("animationend", () => {
+    darkToggle.classList.remove("is-pulling");
+  });
+}
+
+init();
