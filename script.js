@@ -105,29 +105,41 @@ function makeCard(link, i) {
   }
   card.appendChild(dustLayer);
 
-  // 3D tilt on hover
+  // Hover effects
+  card.addEventListener("pointerenter", () => focusCard(card));
   card.addEventListener("pointermove", e => tilt(card, e));
-  card.addEventListener("pointerleave", () => untilt(card));
+  card.addEventListener("pointerleave", () => {
+    untilt(card);
+    unfocusCards();
+  });
 
   return card;
 }
 
-// ---------- 3D tilt (Steam-style) ----------
-const TILT_MAX = 12; // maximum tilt in degrees
+// ---------- Telephoto focus + flat tilt ----------
+const TILT_MAX = 4; // small angles, so the card stays nearly flat
+
+function focusCard(card) {
+  if (reduceMotion) return;
+  document.body.classList.add("telephoto");
+}
+
+function unfocusCards() {
+  document.body.classList.remove("telephoto");
+}
 
 function tilt(card, e) {
   if (reduceMotion || e.pointerType === "touch") return;
 
   const r = card.getBoundingClientRect();
-  const px = clamp01((e.clientX - r.left) / r.width);  // 0 = left edge, 1 = right edge
-  const py = clamp01((e.clientY - r.top) / r.height);  // 0 = top edge, 1 = bottom edge
+  const px = clamp01((e.clientX - r.left) / r.width);
+  const py = clamp01((e.clientY - r.top) / r.height);
 
-  // Cursor on the top tips the card back, so the bottom lifts. Cursor on the right tips it right.
-  // If it tilts the wrong way, swap the signs on these two lines.
+  // A very long perspective flattens the card, like a telephoto lens
   const rx = (0.5 - py) * 2 * TILT_MAX;
   const ry = (px - 0.5) * 2 * TILT_MAX;
 
-  card.style.transform = `perspective(800px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+  card.style.transform = `perspective(5000px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
   card.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
   card.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
 }
@@ -138,6 +150,7 @@ function untilt(card) {
   card.style.setProperty("--my", "50%");
 }
 
+// ---------- Top picks ----------
 function renderTopPicks(q) {
   const box = document.getElementById("top-picks");
   const grid = document.getElementById("top-cards");
@@ -150,6 +163,7 @@ function renderTopPicks(q) {
   picks.forEach((link, i) => grid.appendChild(makeCard(link, i)));
 }
 
+// ---------- Render ----------
 function render() {
   const q = state.query.trim().toLowerCase();
   els.results.innerHTML = "";
@@ -244,6 +258,7 @@ function applySnap(card, p, dir) {
     d.style.transform = `translate(${(d.dx * local + sway).toFixed(1)}px, ${(d.dy * local).toFixed(1)}px)`;
   });
 }
+
 // ---------- Whole-page depth: centre bigger, edges smaller ----------
 const DEPTH_SELECTOR = ".hero, .top-picks, .category-head, .suggest, .footer, .card";
 let depthQueued = false;
@@ -271,6 +286,7 @@ function updateDepth() {
     el.style.setProperty("--depth", (1.05 - 0.11 * d).toFixed(3));
   });
 }
+
 window.addEventListener("scroll", () => { requestSnap(); requestDepth(); }, { passive: true });
 window.addEventListener("resize", () => { requestSnap(); requestDepth(); });
 
