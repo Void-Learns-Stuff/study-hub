@@ -1,0 +1,95 @@
+{
+  "categories": [
+    {
+      "id": "math",
+      "name": "Math",
+      "emoji": "📐",
+      "links": [
+        {
+          "name": "Khan Academy",
+          "url": "https://www.khanacademy.org",
+          "description": "Free lessons from basic arithmetic to calculus, with practice exercises.",
+          "level": "All levels",
+          "tags": ["algebra", "calculus", "practice"]
+        },
+        {
+          "name": "3Blue1Brown",
+          "url": "https://www.3blue1brown.com",
+          "description": "Visual explanations of linear algebra, calculus and neural networks.",
+          "level": "Intermediate",
+          "tags": ["visual", "linear algebra", "calculus"]
+        },
+        {
+          "name": "Desmos",
+          "url": "https://www.desmos.com/calculator",
+          "description": "A free graphing calculator that's great for seeing functions come alive.",
+          "level": "All levels",
+          "tags": ["graphing", "tool"]
+        }
+      ]
+    },
+    {
+      "id": "programming",
+      "name": "Programming",
+      "emoji": "💻",
+      "links": [
+        {
+          "name": "freeCodeCamp",
+          "url": "https://www.freecodecamp.org",
+          "description": "Structured, free coding courses with certifications and projects.",
+          "level": "Beginner",
+          "tags": ["web", "python", "projects"]
+        },
+        {
+          "name": "MIT OpenCourseWare",
+          "url": "https://ocw.mit.edu",
+          "description": "Free course materials from MIT, including lectures, notes and problem sets.",
+          "level": "Advanced",
+          "tags": ["cs", "lectures", "university"]
+        }
+      ]
+    },
+    {
+      "id": "science",
+      "name": "Science",
+      "emoji": "🧪",
+      "links": [
+        {
+          "name": "PhET Interactive Simulations",
+          "url": "https://phet.colorado.edu",
+          "description": "Free physics, chemistry and biology simulations you can play with.",
+          "level": "All levels",
+          "tags": ["physics", "chemistry", "simulations"]
+        },
+        {
+          "name": "OpenStax",
+          "url": "https://openstax.org",
+          "description": "Free, peer-reviewed textbooks for high school and college courses.",
+          "level": "Intermediate",
+          "tags": ["textbooks", "college"]
+        }
+      ]
+    },
+    {
+      "id": "study-skills",
+      "name": "Study Skills",
+      "emoji": "🧠",
+      "links": [
+        {
+          "name": "Anki",
+          "url": "https://apps.ankiweb.net",
+          "description": "Free flashcards that use spaced repetition to help you remember things longer.",
+          "level": "All levels",
+          "tags": ["flashcards", "memory"]
+        },
+        {
+          "name": "Seeing Theory",
+          "url": "https://seeing-theory.brown.edu",
+          "description": "Interactive, visual introduction to probability and statistics.",
+          "level": "Beginner",
+          "tags": ["statistics", "probability", "visual"]
+        }
+      ]
+    }
+  ]
+}
