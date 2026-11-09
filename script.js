@@ -102,7 +102,37 @@ function makeCard(link, i) {
   }
   card.appendChild(dustLayer);
 
+  // 3D tilt on hover
+  card.addEventListener("pointermove", e => tilt(card, e));
+  card.addEventListener("pointerleave", () => untilt(card));
+
   return card;
+}
+
+// ---------- 3D tilt (Steam-style) ----------
+const TILT_MAX = 12; // maximum tilt in degrees
+
+function tilt(card, e) {
+  if (reduceMotion || e.pointerType === "touch") return;
+
+  const r = card.getBoundingClientRect();
+  const px = clamp01((e.clientX - r.left) / r.width);  // 0 = left edge, 1 = right edge
+  const py = clamp01((e.clientY - r.top) / r.height);  // 0 = top edge, 1 = bottom edge
+
+  // Cursor on the top tips the card back, so the bottom lifts. Cursor on the right tips it right.
+  // If it tilts the wrong way, swap the signs on these two lines.
+  const rx = (0.5 - py) * 2 * TILT_MAX;
+  const ry = (px - 0.5) * 2 * TILT_MAX;
+
+  card.style.transform = `perspective(800px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+  card.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
+  card.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
+}
+
+function untilt(card) {
+  card.style.transform = "";
+  card.style.setProperty("--mx", "50%");
+  card.style.setProperty("--my", "50%");
 }
 
 function renderTopPicks(q) {
@@ -185,7 +215,8 @@ function applySnap(card, p, dir) {
     if (card._snapped) {
       card.style.opacity = "";
       card.style.filter = "";
-      card.style.transform = "";
+      card.style.translate = "";
+      card.style.scale = "";
       card.style.transition = "";
       card._dust.forEach(d => (d.style.opacity = "0"));
       card._snapped = false;
@@ -197,7 +228,8 @@ function applySnap(card, p, dir) {
   card.style.transition = "none";
   card.style.opacity = String(1 - p);
   card.style.filter = `blur(${(p * 6).toFixed(2)}px)`;
-  card.style.transform = `translateY(${(-p * 24 * dir).toFixed(1)}px) scale(${(1 - p * 0.05).toFixed(3)})`;
+  card.style.translate = `0 ${(-p * 24 * dir).toFixed(1)}px`;
+  card.style.scale = (1 - p * 0.05).toFixed(3);
 
   const glow = Math.sin(Math.min(1, p) * Math.PI);
   card._dust.forEach(d => {
