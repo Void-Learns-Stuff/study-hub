@@ -186,6 +186,7 @@ function render() {
 
   els.empty.hidden = total > 0;
   requestSnap();
+  requestDepth();
 }
 
 // ---------- Thanos snap (scroll-linked) ----------
