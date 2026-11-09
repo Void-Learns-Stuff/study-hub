@@ -220,7 +220,7 @@ function applySnap(card, p, dir) {
       card.style.opacity = "";
       card.style.filter = "";
       card.style.translate = "";
-      card.style.scale = "";
+      card.style.removeProperty("--snap");
       card._dust.forEach(d => (d.style.opacity = "0"));
       card._snapped = false;
     }
@@ -233,7 +233,7 @@ function applySnap(card, p, dir) {
   card.style.opacity = String(Math.max(0, 1 - Math.pow(p, 1.3) * 1.1));
   card.style.filter = `blur(${(p * 4).toFixed(2)}px)`;
   card.style.translate = `0 ${(-p * 20 * dir).toFixed(1)}px`;
-  card.style.scale = (1 - p * 0.04).toFixed(3);
+  card.style.setProperty("--snap", (1 - p * 0.04).toFixed(3));
 
   // Each grain starts moving at a slightly different moment, so the cloud spreads out
   card._dust.forEach(d => {
@@ -242,6 +242,33 @@ function applySnap(card, p, dir) {
     const sway = Math.sin(local * 6 + d.phase) * 6;
     d.style.opacity = (fade * d.maxOpacity).toFixed(3);
     d.style.transform = `translate(${(d.dx * local + sway).toFixed(1)}px, ${(d.dy * local).toFixed(1)}px)`;
+  });
+}
+// ---------- Whole-page depth: centre bigger, edges smaller ----------
+const DEPTH_SELECTOR = ".hero, .top-picks, .category-head, .suggest, .footer, .card";
+let depthQueued = false;
+
+function requestDepth() {
+  if (reduceMotion || depthQueued) return;
+  depthQueued = true;
+  requestAnimationFrame(updateDepth);
+}
+
+function updateDepth() {
+  depthQueued = false;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  document.querySelectorAll(DEPTH_SELECTOR).forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > vh) return; // skip what's off screen
+
+    const dx = ((r.left + r.width / 2) - vw / 2) / (vw / 2);
+    const dy = ((r.top + r.height / 2) - vh / 2) / (vh / 2);
+    const d = clamp01(Math.hypot(dx, dy) / Math.SQRT2); // 0 at centre, 1 at corners
+
+    // Centre is about 5% bigger, corners about 6% smaller
+    el.style.setProperty("--depth", (1.05 - 0.11 * d).toFixed(3));
   });
 }
 window.addEventListener("scroll", () => { requestSnap(); requestDepth(); }, { passive: true });
