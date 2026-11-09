@@ -126,3 +126,44 @@ els.clear.addEventListener("click", () => {
 });
 
 init();
+
+// ---------- Dark mode pull-cord ----------
+const darkToggle = document.getElementById("darkToggle");
+const THEME_KEY = "studyhub-dark";
+
+function applyTheme(isDark) {
+  document.body.classList.toggle("dark", isDark);
+  darkToggle.setAttribute("aria-pressed", String(isDark));
+  darkToggle.dataset.tip = isDark
+    ? "Click to turn off dark mode"
+    : "Click to turn on dark mode";
+}
+
+// Remember the visitor's choice, if their browser allows storage
+let savedDark = false;
+try {
+  savedDark = localStorage.getItem(THEME_KEY) === "true";
+} catch (e) {
+  // Storage blocked: the site still works, the choice just won't be remembered
+}
+applyTheme(savedDark);
+
+darkToggle.addEventListener("click", () => {
+  const next = !document.body.classList.contains("dark");
+
+  // Restart the tug animation each time
+  darkToggle.classList.remove("is-pulling");
+  void darkToggle.offsetWidth;
+  darkToggle.classList.add("is-pulling");
+
+  // Flip the lights just after the pull starts
+  setTimeout(() => applyTheme(next), 180);
+
+  try {
+    localStorage.setItem(THEME_KEY, String(next));
+  } catch (e) {}
+});
+
+darkToggle.addEventListener("animationend", () => {
+  darkToggle.classList.remove("is-pulling");
+});
