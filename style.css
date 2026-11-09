@@ -21,13 +21,14 @@ body {
   line-height: 1.7;
   color: var(--ink);
   background: var(--paper);
+  transition: background-color .4s, color .4s;
 }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);
 }
 
-/* Hero */
+/* ---------- Hero ---------- */
 .hero {
   padding: 4rem 1.25rem 2.5rem;
   text-align: center;
@@ -62,10 +63,9 @@ body {
 .lead {
   max-width: 36rem;
   margin: 0 auto 2rem;
-  color: var(--ink);
 }
 
-/* Search */
+/* ---------- Search ---------- */
 .search-wrap {
   max-width: 540px;
   margin: 0 auto 1.25rem;
@@ -88,7 +88,7 @@ body {
   box-shadow: 6px 6px 0 var(--ink);
 }
 
-/* Filter chips */
+/* ---------- Filter chips ---------- */
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -109,7 +109,7 @@ body {
 .chip:hover { transform: translateY(-2px) rotate(-1deg); }
 .chip.is-active { background: var(--ink); color: var(--sun); }
 
-/* Status + results */
+/* ---------- Layout ---------- */
 main {
   max-width: 1000px;
   margin: 2.5rem auto;
@@ -120,7 +120,6 @@ main {
   color: var(--muted);
   margin-bottom: 1.5rem;
 }
-
 .results {
   display: grid;
   gap: 2.25rem;
@@ -140,12 +139,12 @@ main {
   color: var(--muted);
 }
 
+/* ---------- Cards ---------- */
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1.1rem;
 }
-
 .card {
   display: flex;
   flex-direction: column;
@@ -154,13 +153,16 @@ main {
   border-radius: var(--radius);
   padding: 1.25rem 1.3rem;
   box-shadow: 5px 5px 0 var(--ink);
-  transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s;
   animation: rise .45s var(--ease) both;
 }
 .card:nth-child(3n) { transform: rotate(.6deg); }
 .card:hover {
   transform: translate(-3px, -3px) rotate(0);
   box-shadow: 8px 8px 0 var(--ink);
+}
+.card.featured {
+  border-color: #f2a900;
 }
 .card h3 {
   font-size: 1.2rem;
@@ -194,23 +196,47 @@ main {
   padding: .15rem .6rem;
   border-radius: 999px;
   background: var(--line);
+  color: var(--ink);
 }
-.pill.level { background: var(--teal); color: #fff; }
+.pill.level { background: var(--indigo); color: #fff; }
 .pill.tag { background: transparent; border: 1px solid var(--line); }
+.pill.price-free     { background: var(--teal); color: #fff; }
+.pill.price-freemium { background: var(--sun); color: var(--ink); }
+.pill.price-paid     { background: var(--coral); color: #fff; }
+
+.star {
+  color: #f2a900;
+  margin-right: .35rem;
+  font-size: 1.05em;
+}
 
 @keyframes rise {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: none; }
 }
 
-/* Empty state */
+/* ---------- Top picks ---------- */
+.top-picks {
+  margin-bottom: 2.75rem;
+  padding: 1.5rem;
+  border: 2px dashed #f2a900;
+  border-radius: var(--radius);
+}
+.top-picks[hidden] {
+  display: none;
+}
+.top-picks .category-head {
+  color: var(--ink);
+}
+
+/* ---------- Empty state ---------- */
 .empty {
   text-align: center;
   padding: 3rem 1rem;
 }
 .empty-emoji { font-size: 3rem; margin-bottom: .5rem; }
 
-/* Buttons */
+/* ---------- Buttons ---------- */
 .btn {
   display: inline-block;
   font: inherit;
@@ -229,7 +255,7 @@ main {
 .btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
 .btn-primary { background: var(--coral); color: #fff; }
 
-/* Suggest + footer */
+/* ---------- Suggest + footer ---------- */
 .suggest {
   text-align: center;
   padding: 3rem 1.25rem;
@@ -247,20 +273,7 @@ main {
   font-size: .9rem;
 }
 
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-@media (max-width: 600px) {
-  .cards { grid-template-columns: 1fr; }
-}
-
-/* ---------- Pull-cord button ---------- */
+/* ---------- Pull-cord (dark mode switch) ---------- */
 .pull-cord {
   position: fixed;
   top: 0;
@@ -275,7 +288,6 @@ main {
   cursor: pointer;
   transform-origin: top center;
 }
-
 .pull-cord .cord {
   display: block;
   width: 2px;
@@ -283,7 +295,6 @@ main {
   background: var(--ink);
   transition: height .25s var(--ease);
 }
-
 .pull-cord .knob {
   display: block;
   width: 12px;
@@ -294,24 +305,19 @@ main {
   border: 2px solid var(--ink);
   transition: transform .25s var(--ease);
 }
-
 .pull-cord:hover .cord,
 .pull-cord:focus-visible .cord {
   height: 54px;
 }
-
 .pull-cord:hover .knob,
 .pull-cord:focus-visible .knob {
   transform: translateY(3px);
 }
-
 .pull-cord:focus-visible {
   outline: 2px dashed var(--indigo);
   outline-offset: 4px;
   border-radius: 6px;
 }
-
-/* Tooltip: shows the text from data-tip on hover */
 .pull-cord::after {
   content: attr(data-tip);
   position: absolute;
@@ -329,18 +335,14 @@ main {
   transition: opacity .2s, transform .2s var(--ease);
   pointer-events: none;
 }
-
 .pull-cord:hover::after,
 .pull-cord:focus-visible::after {
   opacity: 1;
   transform: none;
 }
-
-/* The tug animation, played when clicked */
 .pull-cord.is-pulling {
   animation: tug .45s var(--ease);
 }
-
 @keyframes tug {
   0%   { transform: translateY(0); }
   35%  { transform: translateY(14px); }
@@ -349,10 +351,6 @@ main {
 }
 
 /* ---------- Dark theme ---------- */
-body {
-  transition: background-color .4s, color .4s;
-}
-
 body.dark {
   --ink: #f3ecdf;
   --paper: #14121c;
@@ -360,47 +358,118 @@ body.dark {
   --line: #35314a;
   --muted: #b8b3c9;
 }
-
 body.dark .hero {
   background: #2a2540;
 }
-
 body.dark .suggest {
   background: #2e2b6b;
 }
-
 body.dark .card,
 body.dark #search {
   box-shadow: 5px 5px 0 #000;
 }
-
 body.dark .card:hover {
   box-shadow: 8px 8px 0 #000;
 }
-
 body.dark .squiggle::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0 5 Q 12.5 0 25 5 T 50 5 T 75 5 T 100 5' stroke='%23f3ecdf' stroke-width='3' fill='none'/%3E%3C/svg%3E");
 }
 
+/* ---------- Subject animations ---------- */
+.subject-icon {
+  display: inline-block;
+}
+.subject-programming .subject-icon    { animation: bob 1.6s ease-in-out infinite; }
+.subject-math .subject-icon           { animation: spin-slow 8s linear infinite; }
+.subject-science .subject-icon        { animation: wobble 1.4s ease-in-out infinite; }
+.subject-humanities .subject-icon     { animation: sway 3.5s ease-in-out infinite; transform-origin: 50% 100%; }
+.subject-languages .subject-icon      { animation: hop 1.8s ease-in-out infinite; }
+.subject-study-skills .subject-icon   { animation: flip 3.2s ease-in-out infinite; }
+.subject-courses .subject-icon        { animation: tilt 2.4s ease-in-out infinite; }
+.subject-learning-sites .subject-icon { animation: pulse-soft 2s ease-in-out infinite; }
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(0); }
+  25%      { transform: rotate(-12deg); }
+  75%      { transform: rotate(12deg); }
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-6deg); }
+  50%      { transform: rotate(6deg); }
+}
+@keyframes hop {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  30%      { transform: translateY(-8px) scale(1, 1.05); }
+  50%      { transform: translateY(0) scale(1.1, 0.9); }
+}
+@keyframes flip {
+  0%, 60%  { transform: rotateY(0); }
+  100%     { transform: rotateY(360deg); }
+}
+@keyframes tilt {
+  0%, 100% { transform: rotate(-8deg) translateY(0); }
+  50%      { transform: rotate(8deg) translateY(-3px); }
+}
+@keyframes pulse-soft {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.18); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25%      { transform: rotate(-3deg); }
+  75%      { transform: rotate(3deg); }
+}
+
+/* Card hover, one style per subject */
+.subject-programming .card:hover {
+  box-shadow: 8px 8px 0 var(--teal);
+}
+.subject-math .card:hover {
+  transform: translate(-3px, -3px) rotate(-1.5deg);
+}
+.subject-science .card:hover {
+  box-shadow: 0 0 0 6px #b8f5e0, 8px 8px 0 var(--ink);
+}
+.subject-humanities .card:hover {
+  transform: translate(-2px, -2px) rotate(0.5deg);
+  box-shadow: 8px 8px 0 #f2a900;
+}
+.subject-languages .card:hover h3 {
+  animation: wiggle .5s ease;
+}
+.subject-languages .card:hover h3 a {
+  color: var(--coral);
+}
+.subject-study-skills .card:hover {
+  transform: perspective(700px) rotateY(-8deg) translate(-2px, -2px);
+}
+.subject-courses .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 8px 14px 0 var(--coral);
+}
+.subject-learning-sites .card:hover {
+  transform: scale(1.03);
+  box-shadow: 8px 8px 0 var(--indigo);
+}
+
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .pull-cord .cord,
-  .pull-cord .knob,
-  .pull-cord::after {
+  *, *::before, *::after {
+    animation: none !important;
     transition: none !important;
+    scroll-behavior: auto !important;
   }
 }
-/* ---------- Top picks section ---------- */
-.top-picks {
-  margin-bottom: 2.75rem;
-  padding: 1.5rem;
-  border: 2px dashed #f2a900;
-  border-radius: var(--radius);
-}
 
-.top-picks[hidden] {
-  display: none;
-}
-
-.top-picks .category-head {
-  color: var(--ink);
+/* ---------- Small screens ---------- */
+@media (max-width: 600px) {
+  .cards { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.6rem; }
 }
