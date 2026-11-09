@@ -22,6 +22,7 @@ body {
   color: var(--ink);
   background: var(--paper);
   transition: background-color .4s, color .4s;
+  overflow-x: hidden;
 }
 
 .sr-only {
@@ -456,20 +457,6 @@ body.dark .squiggle::after {
   box-shadow: 8px 8px 0 var(--indigo);
 }
 
-/* ---------- Reduced motion ---------- */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* ---------- Small screens ---------- */
-@media (max-width: 600px) {
-  .cards { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 2.6rem; }
-}
 /* ---------- Thanos dust ---------- */
 .dust {
   position: absolute;
@@ -481,6 +468,7 @@ body.dark .squiggle::after {
   border-radius: 50%;
   opacity: 0;
 }
+
 /* ---------- Steam-style glare ---------- */
 .card::after {
   content: "";
@@ -496,31 +484,34 @@ body.dark .squiggle::after {
   opacity: 1;
 }
 
-/* ---------- Shattering slices ---------- */
-.shards {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+/* ---------- Telephoto focus ---------- */
+body.telephoto .card:not(:hover) {
+  filter: blur(1.5px);
+  opacity: .6;
+  transition: filter .3s, opacity .3s;
 }
-.shard {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem 1.3rem;
-  background: var(--card);
-  border-left: 2px solid var(--ink);
-  border-right: 2px solid var(--ink);
-  will-change: transform, opacity;
+
+/* ---------- Whole-page depth: centre bigger, edges smaller ---------- */
+.hero,
+.top-picks,
+.category-head,
+.suggest,
+.footer,
+.card {
+  scale: calc(var(--depth, 1) * var(--snap, 1));
 }
-.card.shattering {
-  background: transparent;
-  border-color: transparent;
-  box-shadow: none;
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
-.card.shattering > :not(.shards):not(.dust) {
-  opacity: 0;
-}
-.card.shattering::after {
-  display: none;
+
+/* ---------- Small screens ---------- */
+@media (max-width: 600px) {
+  .cards { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.6rem; }
 }
