@@ -1,63 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Study Hub · Free resources for students</title>
-  <meta name="description" content="A curated, searchable list of free study websites, sorted by subject.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Hub</title>
+  <meta name="description" content="Free and freemium study websites, sorted by subject. Nothing paid, nothing shady." />
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <button class="pull-cord" id="darkToggle" type="button"
-          aria-label="Toggle dark mode" aria-pressed="false"
-          data-tip="Click to turn on dark mode">
+  <!-- Dark mode pull cord -->
+  <button id="darkToggle" class="pull-cord" data-tip="Click to turn on dark mode" aria-label="Turn on dark mode">
     <span class="cord" aria-hidden="true"></span>
     <span class="knob" aria-hidden="true"></span>
   </button>
 
   <header class="hero">
-    <p class="eyebrow">Free stuff, sorted by subject</p>
+    <p class="eyebrow">hey, welcome in 👋</p>
     <h1>Study <span class="squiggle">Hub</span></h1>
-    <p class="lead">A hand-picked list of free websites for learning. Search for what you need, or browse by subject.</p>
+    <p class="lead">
+      Free study websites, sorted by subject. Nothing paid, nothing shady,
+      just the stuff that actually helps you learn. Look around and take what you need.
+    </p>
 
-    <div class="search-wrap">
-      <label for="search" class="sr-only">Search resources</label>
-      <input id="search" type="search" placeholder="Try ‘calculus’ or ‘flashcards’…" autocomplete="off">
+    <div class="search">
+      <input id="search" type="search" placeholder="Looking for something? Try 'calculus' or 'python'" aria-label="Search study sites" autocomplete="off" />
+      <button id="clear" class="btn" type="button" hidden>Clear</button>
     </div>
 
-    <div class="filters" id="filters" role="group" aria-label="Filter by subject"></div>
+    <div id="filters" class="filters" role="group" aria-label="Filter by subject"></div>
   </header>
 
   <main>
+
     <section class="top-picks" id="top-picks" aria-labelledby="top-picks-title" hidden>
-     <h2 id="top-picks-title" class="category-head">
+      <h2 id="top-picks-title" class="category-head">
         <span aria-hidden="true">★</span> Top Picks · Things I personally suggest
       </h2>
       <div class="cards" id="top-cards"></div>
     </section>
 
-    <p class="status" id="status" aria-live="polite">Loading the shelves…</p>
-    <div id="results" class="results"></div>
+    <p class="status" id="status">Getting the shelves ready…</p>
+
+    <div id="results"></div>
 
     <div class="empty" id="empty" hidden>
-      <p class="empty-emoji" aria-hidden="true">🔍</p>
-      <p>Nothing matched that. Try a shorter word, or check the spelling.</p>
-      <button type="button" class="btn" id="clear">Clear search</button>
+      <p>Hmm, nothing matched that one. Try a simpler word, or clear the search and browse.</p>
     </div>
+
+    <section class="suggest" aria-labelledby="suggest-title">
+      <h2 id="suggest-title">Know a good one I missed?</h2>
+      <p>
+        I'd love to hear about it. Send me the link and a line about why it's useful,
+        and I'll take a look.
+      </p>
+      <a class="btn btn-primary" href="https://github.com/void-learns-stuff/study-hub/issues/new" target="_blank" rel="noopener">
+        Suggest a site
+      </a>
+    </section>
+
   </main>
 
-  <section class="suggest" id="suggest">
-    <h2>Know a good one?</h2>
-    <p>This list grows with suggestions. Send me a link and a sentence about why it's useful.</p>
-    <a class="btn btn-primary" href="https://github.com/void-learns-stuff/study-hub/issues/new" target="_blank" rel="noopener">Suggest a resource</a>
-  </section>
-
   <footer class="footer">
-    <p>Each link is labelled Free or Freemium. Found a dead one? Let me know. · © 2026</p>
+    <p>
+      Every link is labelled Free or Freemium. Found a dead one? Let me know.
+      Made by hand, one link at a time. · © 2026
+    </p>
   </footer>
 
   <script src="script.js"></script>
