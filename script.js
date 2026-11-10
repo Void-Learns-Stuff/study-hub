@@ -76,6 +76,7 @@ function makeCard(link, i) {
     <h3>${link.featured ? '<span class="star" title="Top pick" aria-label="Top pick">★</span>' : ""}<a href="${link.url}" target="_blank" rel="noopener">${link.name}</a></h3>
     <p>${link.description}</p>
     <div class="meta">
+          ${link.goat ? '<span class="pill goat">GOAT 🐐</span>' : ""}
       ${link.price ? `<span class="pill price price-${link.price.toLowerCase()}">${link.price}</span>` : ""}
       ${link.level ? `<span class="pill level">${link.level}</span>` : ""}
       ${(link.tags || []).map(t => `<span class="pill tag">${t}</span>`).join("")}
