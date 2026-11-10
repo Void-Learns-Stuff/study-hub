@@ -514,3 +514,6 @@ body.telephoto .card:not(:hover) {
   border: 2px solid var(--ink);
   transform: rotate(-3deg);
 }
+[hidden] {
+  display: none !important;
+}
