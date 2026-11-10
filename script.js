@@ -139,7 +139,7 @@ function tilt(card, e) {
   const rx = (0.5 - py) * 2 * TILT_MAX;
   const ry = (px - 0.5) * 2 * TILT_MAX;
 
-  card.style.transform = `perspective(5000px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+  card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
   card.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
   card.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
 }
