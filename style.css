@@ -517,3 +517,18 @@ body.telephoto .card:not(:hover) {
 [hidden] {
   display: none !important;
 }
+.search {
+  position: relative;
+}
+
+.search #clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 14px;
+}
+
+.search #search {
+  padding-right: 90px;
+}
