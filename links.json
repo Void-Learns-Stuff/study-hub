@@ -105,7 +105,7 @@
       "name": "Learning Sites & Tools",
       "emoji": "🧭",
       "links": [
-        {"name": "Solvely", "url": "https://solvely.ai", "featured": true, "goat": true, "description": "AI study app that solves homework from photos, PDFs or text with step-by-step answers, plus exam prep and note tools.", "level": "All levels", "price": "Freemium", "tags": ["homework", "ai", "math", "exam prep"]} 
+        {"name": "Solvely", "url": "https://solvely.ai", "featured": true, "goat": true, "description": "AI study app that solves homework from photos, PDFs or text with step-by-step answers, plus exam prep and note tools.", "level": "All levels", "price": "Freemium", "tags": ["homework", "ai", "math", "exam prep"]}, 
         {"name": "Learn Anything", "url": "https://learn-anything.xyz", "description": "Search tool for learning resources.", "level": "All levels", "price": "Free", "tags": ["search", "resources"]},
         {"name": "OSSU", "url": "https://github.com/ossu", "description": "Open source self-study path for computer science.", "level": "Beginner", "price": "Free", "tags": ["cs", "self-study", "curriculum"]},
         {"name": "The Borr Project", "url": "https://borr.dev", "description": "Learning resources for self-taught developers.", "level": "Beginner", "price": "Free", "tags": ["self-taught", "development"]},
