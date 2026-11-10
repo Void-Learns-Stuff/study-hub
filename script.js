@@ -117,7 +117,7 @@ function makeCard(link, i) {
 }
 
 // ---------- Telephoto focus + flat tilt ----------
-const TILT_MAX = 4; // small angles, so the card stays nearly flat
+const TILT_MAX = 12; // small angles, so the card stays nearly flat
 
 function focusCard(card) {
   if (reduceMotion) return;
