@@ -507,3 +507,10 @@ body.telephoto .card:not(:hover) {
   .cards { grid-template-columns: 1fr; }
   .hero h1 { font-size: 2.6rem; }
 }
+/* ---------- GOAT badge ---------- */
+.pill.goat {
+  background: var(--coral);
+  color: #fff;
+  border: 2px solid var(--ink);
+  transform: rotate(-3deg);
+}
