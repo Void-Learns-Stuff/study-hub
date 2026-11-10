@@ -532,3 +532,10 @@ body.telephoto .card:not(:hover) {
 .search #search {
   padding-right: 90px;
 }
+.subject {
+  margin-bottom: 64px;
+}
+
+.subject:last-of-type {
+  margin-bottom: 0;
+}
