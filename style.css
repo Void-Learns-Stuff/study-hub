@@ -539,3 +539,14 @@ body.telephoto .card:not(:hover) {
 .subject:last-of-type {
   margin-bottom: 0;
 }
+.search {
+  margin-bottom: 28px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 6px;
+}
