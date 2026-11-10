@@ -105,29 +105,41 @@ function makeCard(link, i) {
   }
   card.appendChild(dustLayer);
 
-  // 3D tilt on hover
+  // Hover effects
+  card.addEventListener("pointerenter", () => focusCard(card));
   card.addEventListener("pointermove", e => tilt(card, e));
-  card.addEventListener("pointerleave", () => untilt(card));
+  card.addEventListener("pointerleave", () => {
+    untilt(card);
+    unfocusCards();
+  });
 
   return card;
 }
 
-// ---------- 3D tilt (Steam-style) ----------
-const TILT_MAX = 12; // maximum tilt in degrees
+// ---------- Telephoto focus + flat tilt ----------
+const TILT_MAX = 4; // small angles, so the card stays nearly flat
+
+function focusCard(card) {
+  if (reduceMotion) return;
+  document.body.classList.add("telephoto");
+}
+
+function unfocusCards() {
+  document.body.classList.remove("telephoto");
+}
 
 function tilt(card, e) {
   if (reduceMotion || e.pointerType === "touch") return;
 
   const r = card.getBoundingClientRect();
-  const px = clamp01((e.clientX - r.left) / r.width);  // 0 = left edge, 1 = right edge
-  const py = clamp01((e.clientY - r.top) / r.height);  // 0 = top edge, 1 = bottom edge
+  const px = clamp01((e.clientX - r.left) / r.width);
+  const py = clamp01((e.clientY - r.top) / r.height);
 
-  // Cursor on the top tips the card back, so the bottom lifts. Cursor on the right tips it right.
-  // If it tilts the wrong way, swap the signs on these two lines.
+  // A very long perspective flattens the card, like a telephoto lens
   const rx = (0.5 - py) * 2 * TILT_MAX;
   const ry = (px - 0.5) * 2 * TILT_MAX;
 
-  card.style.transform = `perspective(800px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+  card.style.transform = `perspective(5000px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
   card.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
   card.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
 }
@@ -138,6 +150,7 @@ function untilt(card) {
   card.style.setProperty("--my", "50%");
 }
 
+// ---------- Top picks ----------
 function renderTopPicks(q) {
   const box = document.getElementById("top-picks");
   const grid = document.getElementById("top-cards");
@@ -150,6 +163,7 @@ function renderTopPicks(q) {
   picks.forEach((link, i) => grid.appendChild(makeCard(link, i)));
 }
 
+// ---------- Render ----------
 function render() {
   const q = state.query.trim().toLowerCase();
   els.results.innerHTML = "";
@@ -190,7 +204,6 @@ function render() {
 
 // ---------- Thanos snap (scroll-linked) ----------
 const BAND = 140;
-const SHARDS = 10;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const clamp01 = v => Math.min(1, Math.max(0, v));
 let snapQueued = false;
@@ -214,72 +227,37 @@ function updateSnap() {
   });
 }
 
-// Copies the card's real content into horizontal slices
-function buildShards(card) {
-  const wrap = document.createElement("div");
-  wrap.className = "shards";
-  const content = Array.from(card.children).filter(c => !c.classList.contains("dust"));
-
-  for (let i = 0; i < SHARDS; i++) {
-    const shard = document.createElement("div");
-    shard.className = "shard";
-    const top = (i / SHARDS) * 100;
-    const bottom = 100 - ((i + 1) / SHARDS) * 100;
-    shard.style.clipPath = `inset(${top}% 0 ${bottom}% 0)`;
-    if (i === 0) shard.style.borderTop = "2px solid var(--ink)";
-    if (i === SHARDS - 1) shard.style.borderBottom = "2px solid var(--ink)";
-
-    // Each slice gets its own random drift and tilt
-    shard._dx = rand(-36, 36);
-    shard._dy = rand(-70, -20);
-    shard._rot = rand(-10, 10);
-
-    content.forEach(c => shard.appendChild(c.cloneNode(true)));
-    wrap.appendChild(shard);
-  }
-
-  card.appendChild(wrap);
-  card._shards = Array.from(wrap.children);
-  card.classList.add("shattering");
-}
-
-function removeShards(card) {
-  if (card._shards) {
-    card.querySelector(".shards")?.remove();
-    card._shards = null;
-  }
-  card.classList.remove("shattering");
-}
-
 function applySnap(card, p, dir) {
   if (p <= 0.001) {
     if (card._snapped) {
-      removeShards(card);
+      card.style.opacity = "";
+      card.style.filter = "";
+      card.style.translate = "";
+      card.style.scale = "";
       card._dust.forEach(d => (d.style.opacity = "0"));
       card._snapped = false;
     }
     return;
   }
 
-  if (!card._shards) buildShards(card);
   card._snapped = true;
 
-  // The slices break off starting from the side the card is leaving through
-  card._shards.forEach((s, i) => {
-    const order = dir < 0 ? i / SHARDS : 1 - i / SHARDS;
-    const l = clamp01(p * 1.5 - order * 0.5);
-    s.style.transform = `translate(${(s._dx * l).toFixed(1)}px, ${(s._dy * l).toFixed(1)}px) rotate(${(s._rot * l).toFixed(2)}deg)`;
-    s.style.opacity = String(1 - Math.pow(l, 1.4));
-    s.style.filter = `blur(${(l * 2.5).toFixed(2)}px)`;
-  });
+  // The card itself softly fades and blurs away
+  card.style.opacity = String(Math.max(0, 1 - Math.pow(p, 1.3) * 1.1));
+  card.style.filter = `blur(${(p * 4).toFixed(2)}px)`;
+  card.style.translate = `0 ${(-p * 20 * dir).toFixed(1)}px`;
+  card.style.scale = (1 - p * 0.04).toFixed(3);
 
-  // Loose dust drifts off the card
-  const glow = Math.sin(Math.min(1, p) * Math.PI);
+  // Each grain starts moving at a slightly different moment, so the cloud spreads out
   card._dust.forEach(d => {
-    d.style.opacity = glow.toFixed(3);
-    d.style.transform = `translate(${(d.dx * p).toFixed(1)}px, ${(d.dy * p).toFixed(1)}px)`;
+    const local = clamp01(p * 1.4 - d.delay);
+    const fade = Math.sin(Math.min(1, local) * Math.PI);
+    const sway = Math.sin(local * 6 + d.phase) * 6;
+    d.style.opacity = (fade * d.maxOpacity).toFixed(3);
+    d.style.transform = `translate(${(d.dx * local + sway).toFixed(1)}px, ${(d.dy * local).toFixed(1)}px)`;
   });
 }
+
 window.addEventListener("scroll", requestSnap, { passive: true });
 window.addEventListener("resize", requestSnap);
 
